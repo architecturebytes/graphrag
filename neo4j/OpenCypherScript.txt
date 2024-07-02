@@ -1,0 +1,51 @@
+// OpenCypher 
+
+//CREATING GRAPH ---------------------------------------
+// Create Airport Nodes
+CREATE (:Airport {name: 'JFK', city: 'New York'});
+CREATE (:Airport {name: 'LAX', city: 'Los Angeles'});
+CREATE (:Airport {name: 'ORD', city: 'Chicago'});
+CREATE (:Airport {name: 'MIA', city: 'Miami'});
+CREATE (:Airport {name: 'DFW', city: 'Dallas'});
+
+// Create Flight Paths with Properties
+MATCH (a1:Airport {name: 'JFK'}), (a2:Airport {name: 'LAX'})
+CREATE (a1)-[:FLIGHT_TO {flight_number: 'AA100', duration: 6, airline: 'American Airlines'}]->(a2);
+
+MATCH (a1:Airport {name: 'JFK'}), (a2:Airport {name: 'ORD'})
+CREATE (a1)-[:FLIGHT_TO {flight_number: 'UA200', duration: 2, airline: 'United Airlines'}]->(a2);
+
+MATCH (a1:Airport {name: 'ORD'}), (a2:Airport {name: 'LAX'})
+CREATE (a1)-[:FLIGHT_TO {flight_number: 'DL300', duration: 4, airline: 'Delta Airlines'}]->(a2);
+
+MATCH (a1:Airport {name: 'MIA'}), (a2:Airport {name: 'DFW'})
+CREATE (a1)-[:FLIGHT_TO {flight_number: 'AA400', duration: 3, airline: 'American Airlines'}]->(a2);
+
+MATCH (a1:Airport {name: 'LAX'}), (a2:Airport {name: 'MIA'})
+CREATE (a1)-[:FLIGHT_TO {flight_number: 'AA500', duration: 5, airline: 'American Airlines'}]->(a2);
+
+// QUERYING GRAPH (just for reference) -------------------------------------
+
+//Return all nodes
+MATCH (n) RETURN n
+
+//Return all nodes with relationships
+MATCH (n)-[r]->(m)
+RETURN n, r, m
+
+//Find direct flights from New York to Miami
+MATCH (start:Airport {city: 'New York'})-[:FLIGHT_TO]->(end:Airport {city: 'Miami'})
+RETURN start, end
+
+//Find flights direct from New York to Los Angeles
+MATCH (start:Airport {city: 'New York'})-[flight:FLIGHT_TO]->(end:Airport {city: 'Los Angeles'})
+RETURN start, flight, end
+
+//Find flights from New York to Miami with maximum of one layover
+MATCH p = (start:Airport {city: 'New York'})-[:FLIGHT_TO*]->(end:Airport {city: 'Miami'})
+WHERE length(p) <= 2
+RETURN nodes(p) AS airports, relationships(p) AS flights
+
+//Find airline and duration of flight from New York to Los Angeles
+MATCH (start:Airport {city: 'New York'})-[flight:FLIGHT_TO]->(end:Airport {city: 'Los Angeles'})
+RETURN flight.airline AS Airline, flight.duration AS Duration
