@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: Neo4j Query Executor
+  description: Executes a Neo4j query provided as a URL parameter.
+  version: 1.0.0
+servers:
+  - url: https://us-central1-kg-project-427505.cloudfunctions.net # REPLACE THIS WITH URL TO YOUR FUNCTION
+paths:
+  /GraphQueryFunction: # REPLACE THIS WITH NAME OF YOUR FUNCTION
+    get:
+      summary: Execute a Neo4j query
+      description: Executes a Cypher query on a Neo4j database and returns the result.
+      operationId: execute_query # REPLACE THIS WITH METHOD NAME THAT IS ENTRY POINT TO THE CLOUD FUNCTION
+      parameters:
+        - in: query
+          name: query
+          required: true
+          schema:
+            type: string
+          description: The Open Cypher query to be executed.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
