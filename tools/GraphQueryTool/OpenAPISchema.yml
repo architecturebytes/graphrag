@@ -4,7 +4,7 @@ info:
   description: Executes a Neo4j query provided as a URL parameter.
   version: 1.0.0
 servers:
-  - url: https://us-central1-kg-project-427505.cloudfunctions.net # REPLACE THIS WITH URL TO YOUR FUNCTION
+  - url: https://us-central1-gr-project-927511.cloudfunctions.net # REPLACE THIS WITH URL TO YOUR FUNCTION
 paths:
   /GraphQueryFunction: # REPLACE THIS WITH NAME OF YOUR FUNCTION
     get:
