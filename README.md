@@ -21,11 +21,11 @@ _-_ Interpret the results and provide an answer from it.
 **GraphQueryTool**<br>
 Description: 
 Execute the Open Cypher query against Graph database
-The tool should received Query parameter is plain text, and should not be treated as YAML.
+The tool should receive Query parameter in plain text, and should not be treated as YAML.
 
 **tools/GraphQueryTool/GraphQueryFunction.py**<br>
 This cloud function executes OpenCypher query passed to it as parameter against Neo4J database instance.
 
 **tools/GraphQueryTool/GraphQueryTool/OpenAPISchema.yml**<br>
-OpenAPI Schema that defines (the interfaces of) the above function (GraphQueryFunction.py).<br>
+OpenAPI Schema that defines (the interface of) the above function (GraphQueryFunction.py).<br>
 **_Important_**: In this schema - you must modify the function name URL, PATHS and operationId as per your implementation.
